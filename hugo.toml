@@ -1,0 +1,64 @@
+baseURL = 'https://your-blog-name.vercel.app/'
+languageCode = 'zh-cn'
+title = 'Nguyên '
+theme = 'reimu'
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+
+[params]
+  defaultTheme = 'auto'
+  description = 'Tôi thích Touhou'
+  subtitle = 'Chỉ là web blog tôi muốn làm'
+  author = 'Tôi là Nguyên'
+  avatar = 'reimu.png'
+  enablePjax = true
+  enableTOC = true
+  enableCopy = true
+  enableMathjax = false
+  enableKatex = true
+  enableMermaid = true
+
+  [params.dark_mode]
+    enable = 'auto'
+
+  [params.pjax]
+    enable = true
+
+  [params.player]
+    position = 'before_sidebar'
+    [params.player.aplayer]
+      enable = true
+      [params.player.aplayer.options]
+        fixed = false
+        autoplay = false
+        listFolded = false
+        mutex = true
+        audio = [
+          {name = '不思议の国のアリス', artist = 'sound sepher', url = 'https://files.catbox.moe/5d7l2r.mp3', cover = 'https://raw.githubusercontent.com/D-Sketon/hugo-theme-reimu/main/static/images/reimu.png'}
+        ]
+    [params.player.meting]
+      enable = true
+      meting_api = ''
+      [params.player.meting.options]
+        id = '2265921590'
+        server = 'netease'
+        type = 'playlist'
+
+[menu]
+  [[menu.main]]
+    identifier = 'home'
+    name = '首页'
+    url = '/'
+    weight = 1
+  [[menu.main]]
+    identifier = 'archives'
+    name = '归档'
+    url = '/archives/'
+    weight = 2
+  [[menu.main]]
+    identifier = 'about'
+    name = '关于'
+    url = '/about/'
+    weight = 3
