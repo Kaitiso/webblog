@@ -1,4 +1,4 @@
-baseURL = 'https://your-blog-name.vercel.app/'
+baseURL = 'https://webblog-kaitiso.vercel.app/'
 languageCode = 'zh-cn'
 title = 'Nguyên '
 theme = 'reimu'
