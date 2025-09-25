@@ -1,6 +1,6 @@
 baseURL = 'https://webblog-kaitiso.vercel.app/'
 languageCode = 'zh-cn'
-title = 'Nguyên '
+title = 'Nguyên Blog'
 theme = 'reimu'
 
 [markup]
