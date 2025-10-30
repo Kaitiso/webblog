@@ -31,7 +31,7 @@ cover: "/images/reimu2.png"
 
 - Thanks for visiting this little shrine.  
 - If you stay long enough, I hope you’ll find something here that makes you smile, even just a little.
-````code
+````yml
 ⣿⣿⣿⣿⣿⣿⣿⣿⡿⢋⣡⣤⠙⠻⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⠿⣿⡿⠿⠛⠋⠉⢠⣿⣿⣷⣌⢻⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⡿⢠⣿⣿⠇⡀⠆⠰⠀⠀⠀⠉⡉⢉⠉⡉⠉⠛⠻⠿⠿⠟⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠋⠉⠠⠀⠆⠰⠀⠂⠐⠀⠂⠄⠠⢀⠈⡐⠡⠀⢻⣿⣿⣿⠆⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣷⡘⠏⠛⢀⡐⠂⢄⡐⠂⠅⠊⠐⠈⠀⠁⠀⠀⠰⣀⠒⡄⢣⠘⠤⢉⠆⡱⢈⠒⡰⢀⠆⡰⠠⠄⡄⢀⠀⠀⠀⡀⠀⡄⠠⢄⠠⡀⢡⠐⠈⢡⣾⡩⠾⣛⢿
