@@ -1,17 +1,17 @@
 ---
-title: "About me"
+title: "Hello World - Just Another Day Without Donations"
 date: 2025-10-29T11:00:00-07:00
 lastmod: 2025-10-30T11:00:00-07:00
 cover: "/images/reimu2.png"
 ---
 ## ⛩️ Just a place where faith equals Reimu ⛩️
 
-- Hello there. I’m Nguyên, just another IT student wandering through lines of code, trying to make sense of this digital Gensokyo.  
-- I’m not a genius not even close. Just someone who enjoys programming, games, and occasionally messing around with open-source projects without knowing exactly what the hell I’m doing.
+- Wazzup, i’m just an IT student still learning my way through this world,  broke more code than I fixed, but like Reimu, i just deal with incidents as when they come.
+- I’m not a genius, just someone who enjoys programming, games and occasionally messing around with open-source projects without knowing exactly what the hell i’m doing.
 
 - Like Reimu, I tend to take things easy until something strange happens.  *(yeah, lazy af.)*
 
-- When bugs appear, I sigh first... then try to exterminate them — hopefully before they crash everything.
+- When bugs appear, I sigh first... then try to exterminate them before they cause trouble like those zamn youkai ᗜ⁔ᗜ
 
 
 ## (っ˕ -｡)ᶻ 𝗓 𐰁 Reimu probably watching me debug
@@ -20,7 +20,8 @@ cover: "/images/reimu2.png"
 
 
 
-- This blog is my small shrine, a place to drop notes, small projects and can be random thoughts about coding, games or life itself. No promises, no grand mission, just faith, curiosity, and a touch of natural stupidity.
+- This blog is my small corner on the web where I try something, break many things and fix countless other things and leave some....i dont know....maybe notes behind about coding, games or life (ᵕ—ᴗ—)
+
 
 
 > “Faith? Maybe I don’t have much of that.  
@@ -30,7 +31,7 @@ cover: "/images/reimu2.png"
 ## ദ്ദി ᗜˬᗜ✧
 
 - Thanks for visiting this little shrine.  
-- If you stay long enough, I hope you’ll find something here that makes you smile, even just a little.
+- If you stay long enough, I hope you’ll find something here that makes you smile even just a little.
 ````yml
 ⣿⣿⣿⣿⣿⣿⣿⣿⡿⢋⣡⣤⠙⠻⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⠿⣿⡿⠿⠛⠋⠉⢠⣿⣿⣷⣌⢻⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⡿⢠⣿⣿⠇⡀⠆⠰⠀⠀⠀⠉⡉⢉⠉⡉⠉⠛⠻⠿⠿⠟⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠋⠉⠠⠀⠆⠰⠀⠂⠐⠀⠂⠄⠠⢀⠈⡐⠡⠀⢻⣿⣿⣿⠆⣿⣿
