@@ -44,9 +44,9 @@ Source: Symposium of Post-mysticism Bunbunmaru Newspaper
 > ---
 > ✨ · · · 🧹 · · · ✨ 
 > 
-> *“All done! Bugs are gone — that’s some good magic, ze☆”*  
-> *Perfect time for a nap — or a new experiment. ze☆*  
+> *“All done! Bugs are gone, that’s some good magic, ze☆*  
+> *Perfect time for a nap or a new experiment. ze☆"*  
 >  
-> — Kirisame Marisa 00
+> - Kirisame Marisa -
 > 
 
