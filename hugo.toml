@@ -1,6 +1,6 @@
 baseURL = 'https://webblog-kaitiso.vercel.app/'
 languageCode = 'zh-cn'
-title = 'Nguyên Blog'
+title = 'Blog of Faith and Foolishness'
 theme = 'reimu'
 
 [markup]
@@ -9,9 +9,9 @@ theme = 'reimu'
 
 [params]
   defaultTheme = 'auto'
-  description = 'Tôi thích Touhou'
-  subtitle = 'Chỉ là web blog tôi muốn làm'
-  author = 'Tôi là Nguyên'
+  description = 'The Embodiment of Natural Stupidity, Don’t make me work more than I have to.'
+  subtitle = 'I don’t mind youkai visiting, as long as they bring offerings'
+  author = 'Nguyên'
   avatar = 'reimu.png'
   enablePjax = true
   enableTOC = true

@@ -293,6 +293,7 @@ a, .main-nav-icon, .popup-btn-close, button {
 @import "partials/card";
 @import "partials/sidebar";
 @import "partials/container";
+@import "partials/touhou-game";
 
 {{ if $params.top.enable }}
 @import "partials/top";

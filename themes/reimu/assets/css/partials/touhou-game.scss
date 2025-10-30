@@ -1,0 +1,192 @@
+// Touhou Mini Game Styles
+.game-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  
+  &.hidden {
+    display: none;
+  }
+}
+
+.game-container {
+  position: relative;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(255, 0, 100, 0.5);
+  overflow: hidden;
+}
+
+#touhou-canvas {
+  display: block;
+  background: transparent;
+  border-radius: 10px 10px 0 0;
+}
+
+.game-ui {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 0, 100, 0.8);
+  pointer-events: none;
+  
+  .game-score, .game-lives {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 0, 100, 0.3);
+  }
+}
+
+.game-controls {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  pointer-events: none;
+  
+  p {
+    margin: 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 0, 100, 0.3);
+  }
+  
+  button {
+    background: rgba(255, 0, 100, 0.8);
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    
+    &:hover {
+      background: rgba(255, 0, 100, 1);
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
+    }
+  }
+}
+
+.game-over-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  
+  &.hidden {
+    display: none;
+  }
+  
+  h2 {
+    font-size: 36px;
+    margin: 0 0 20px 0;
+    color: #ff0066;
+    text-shadow: 0 0 10px rgba(255, 0, 100, 0.8);
+  }
+  
+  p {
+    font-size: 18px;
+    margin: 0 0 30px 0;
+  }
+  
+  button {
+    background: rgba(255, 0, 100, 0.8);
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 0, 100, 1);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 0, 100, 0.5);
+    }
+  }
+}
+
+// Game button icon
+#nav-game-btn:before {
+  content: "🎮";
+  font-size: 18px;
+}
+
+// Responsive design
+@media (max-width: 900px) {
+  .game-container {
+    width: 95vw;
+    height: 70vh;
+  }
+  
+  #touhou-canvas {
+    width: 100%;
+    height: calc(100% - 80px);
+  }
+  
+  .game-ui {
+    font-size: 12px;
+  }
+  
+  .game-controls {
+    font-size: 10px;
+    
+    button {
+      padding: 6px 12px;
+      font-size: 10px;
+    }
+  }
+  
+  .game-over-screen h2 {
+    font-size: 28px;
+  }
+  
+  .game-over-screen p {
+    font-size: 16px;
+  }
+  
+  .game-over-screen button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}

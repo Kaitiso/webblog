@@ -256,3 +256,6 @@ window.safeImport = async (url: string, integrity?: string) => {
 
   return module;
 };
+
+// Import Touhou game
+import "./touhou-game";

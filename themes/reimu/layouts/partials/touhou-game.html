@@ -1,0 +1,20 @@
+<!-- Touhou Mini Game Overlay -->
+<div id="touhou-game-overlay" class="game-overlay hidden">
+  <div class="game-container">
+    <canvas id="touhou-canvas" width="800" height="600"></canvas>
+    <div class="game-ui">
+      <div class="game-score">Score: <span id="game-score">0</span></div>
+      <div class="game-lives">Lives: <span id="game-lives">3</span></div>
+      <div class="game-controls">
+        <p>Arrow Keys: Move | Z: Shoot</p>
+        <button id="game-pause-btn">Pause</button>
+        <button id="game-close-btn">Close Game</button>
+      </div>
+    </div>
+    <div id="game-over-screen" class="game-over-screen hidden">
+      <h2>Game Over!</h2>
+      <p>Final Score: <span id="final-score">0</span></p>
+      <button id="game-restart-btn">Play Again</button>
+    </div>
+  </div>
+</div>
