@@ -1,0 +1,90 @@
+<!-- Touhou Mini Game Overlay -->
+<div id="touhou-game-overlay" class="game-overlay hidden">
+  <div class="game-container">
+    <canvas id="touhou-canvas" width="900" height="675"></canvas>
+    <div class="game-ui">
+      <div class="game-score">Score: <span id="game-score">0</span></div>
+      <div class="game-lives">Lives: <span id="game-lives">3</span></div>
+      <div class="game-controls">
+        <div class="game-instructions">
+          <p>Arrow Keys: Move | Z: Shoot</p>
+        </div>
+        <div class="game-buttons">
+          <button id="game-pause-btn">Pause</button>
+          <button id="game-close-btn">Close Game</button>
+        </div>
+      </div>
+    </div>
+    <div id="game-over-screen" class="game-over-screen hidden">
+      <h2>Game Over!</h2>
+      <p>Final Score: <span id="final-score">0</span></p>
+      <button id="game-restart-btn">Play Again</button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Custom Touhou Game Overrides */
+.game-container {
+  transform: scale(1.1);
+}
+
+.game-controls {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.game-instructions {
+  margin: 0;
+}
+
+.game-instructions p {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 0, 100, 0.3);
+}
+
+.game-buttons {
+  display: flex;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.game-buttons button {
+  background: rgba(255, 0, 100, 0.8);
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.game-buttons button:hover {
+  background: rgba(255, 0, 100, 1);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
+}
+</style>
+
+<script>
+// Add ESC key handler for closing the game
+document.addEventListener('DOMContentLoaded', function() {
+  const overlay = document.getElementById('touhou-game-overlay');
+  const closeBtn = document.getElementById('game-close-btn');
+  
+  if (overlay && closeBtn) {
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+        closeBtn.click();
+      }
+    });
+  }
+});
+</script>
+

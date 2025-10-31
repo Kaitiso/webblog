@@ -26,6 +26,9 @@ theme = 'reimu'
   [params.pjax]
     enable = true
 
+  [params.footer]
+    busuanzi = false
+
   [params.player]
     position = 'before_sidebar'
     [params.player.aplayer]

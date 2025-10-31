@@ -3,6 +3,12 @@ title: "I Saw Reimu theme, So I Coded"
 date: 2025-10-29T11:00:00-07:00
 lastmod: 2025-10-30T11:00:00-07:00
 cover: "/images/reimu3.png"
+categories:
+  - Not Coding
+tags:
+  - Blog
+  - Hugo
+  - Touhou
 ---
 
 ## ⛩️ The Shrine I Didn’t Mean to Build ⛩️
