@@ -15,11 +15,11 @@ static/
 ├── audio/
 │   ├── stage1.mp3  # Nhạc màn 1 - Marisa
 │   ├── stage2.mp3  # Nhạc màn 2 - Elly
-│   └── stage3.mp3  # Nhạc màn 3 - Yuuka
+│   └── stage3.mp3  # Nhạc màn 3 - Alice
 └── images/game-sprites/
     ├── boss1.png   # Sprite Marisa (273x138px, 8 frames - 2 hàng x 4 cột)
     ├── boss2.png   # Sprite Elly (271x135px, 8 frames - 2 hàng x 4 cột)
-    └── boss3.png   # Sprite Yuuka (273x70px, 4 frames - 1 hàng x 4 cột)
+    └── boss3.png   # Sprite Alice (273x70px, 4 frames - 1 hàng x 4 cột)
 ```
 
 ### Code Files:
@@ -33,7 +33,7 @@ static/
 ### 1. Hệ thống 3 màn
 - **Stage 1: Marisa** - Boss váy xanh, 1000 HP, 8 frames animation
 - **Stage 2: Elly** - Boss váy đỏ, 1500 HP, 8 frames animation
-- **Stage 3: Yuuka** - Boss váy tím, 2000 HP, 4 frames animation
+- **Stage 3: Alice** - Boss váy tím, 2000 HP, 4 frames animation
 
 ### 2. Sprite Animation
 - **Boss 1**: 8 frames animation (2 hàng x 4 frames, 68x69px mỗi frame)
@@ -73,8 +73,8 @@ static/
 ### Gameplay:
 1. Bắt đầu với 5 mạng
 2. Đánh bại Boss 1 (Marisa) → Boss 2 (Elly) xuất hiện ngay (+1 mạng)
-3. Đánh bại Boss 2 (Elly) → Boss 3 (Yuuka) xuất hiện ngay (+1 mạng)
-4. Đánh bại Boss 3 (Yuuka) → Chiến thắng (+1 mạng)
+3. Đánh bại Boss 2 (Elly) → Boss 3 (Alice) xuất hiện ngay (+1 mạng)
+4. Đánh bại Boss 3 (Alice) → Chiến thắng (+1 mạng)
 5. Mất hết mạng = Game Over
 
 **Lưu ý**: 3 boss xuất hiện liên tiếp trong cùng 1 màn, không có màn hình chuyển cảnh

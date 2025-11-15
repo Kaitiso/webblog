@@ -960,7 +960,7 @@ class TouhouGame {
   }
 
   private drawStageInfo(): void {
-    const stageNames = ['Marisa', 'Elly', 'Yuuka'];
+    const stageNames = ['Marisa', 'Elly', 'Alice'];
     this.ctx.save();
     this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     this.ctx.fillRect(10, 10, 180, 50);

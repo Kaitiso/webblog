@@ -405,7 +405,7 @@ export const Boss2Patterns: BossPattern[] = [
   }
 ];
 
-// Boss 3 (Yuuka) - Hard patterns
+// Boss 3 (Alice) - Hard patterns
 export const Boss3Patterns: BossPattern[] = [
   laserWall,
   inwardSpiral,

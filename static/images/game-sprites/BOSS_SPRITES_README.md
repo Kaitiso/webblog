@@ -18,11 +18,11 @@ This directory should contain sprite images for the 3 bosses.
 - **Style:** Girl with blonde hair, red dress, and magic wand
 - **Frame size:** 68x67 pixels each
 
-### boss3.png - Stage 3: Yuuka
+### boss3.png - Stage 3: Alice
 - **Size:** 273x70 pixels (4 frames: 1 row x 4 frames)
 - **Layout:** Single-row sprite sheet (4 frames in a row)
 - **Animation:** Idle animation with magical effects (4 frames total)
-- **Style:** Elegant character with purple dress and magical aura
+- **Style:** Magical doll user character with elegant dress
 - **Frame size:** 68x70 pixels each
 
 ## Sprite Sheet Format:
@@ -83,7 +83,7 @@ Total size: 273x70 pixels
 If sprite files are missing, the game will display colored rectangles:
 - Stage 1 (Marisa): Purple (#7e57c2)
 - Stage 2 (Elly): Pink (#e91e63)
-- Stage 3 (Yuuka): Gold (#ffd700)
+- Stage 3 (Alice): Gold (#ffd700)
 
 ## Creating Your Own Sprites:
 

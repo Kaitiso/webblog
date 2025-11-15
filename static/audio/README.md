@@ -6,7 +6,7 @@ This directory should contain background music files for each stage.
 
 - **stage1.mp3** - Background music for Stage 1 (Marisa)
 - **stage2.mp3** - Background music for Stage 2 (Elly)
-- **stage3.mp3** - Background music for Stage 3 (Yuuka)
+- **stage3.mp3** - Background music for Stage 3 (Alice)
 
 ## File Format:
 - Supported formats: MP3, OGG, WAV
