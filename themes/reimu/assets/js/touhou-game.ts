@@ -1,4 +1,4 @@
-import { DefaultBossScript, BossPattern, PatternContext } from './boss-patterns';
+import { Boss1Patterns, Boss2Patterns, Boss3Patterns, BossPattern, PatternContext } from './boss-patterns';
 // Touhou Mini Game
 interface GameState {
   isRunning: boolean;
@@ -6,6 +6,8 @@ interface GameState {
   score: number;
   lives: number;
   level: number;
+  stage: number;
+  maxStage: number;
 }
 
 interface Player {
@@ -76,6 +78,15 @@ interface Boss {
   maxHealth: number;
   bullets: Bullet[];
   sprite: HTMLImageElement | null;
+  spriteWidth: number;
+  spriteHeight: number;
+  frameWidth: number;
+  frameHeight: number;
+  currentFrame: number;
+  animationSpeed: number;
+  lastFrameTime: number;
+  totalFrames: number;
+  framesPerRow: number;
 }
 
 interface Particle {
@@ -109,6 +120,8 @@ class TouhouGame {
   private patternIndex: number;
   private patternElapsed: number;
   private playerHitboxRadius = 4; // Chấm hitbox radius ~ 8px đường kính
+  private bgMusic: HTMLAudioElement | null;
+  private bossSprites: (HTMLImageElement | null)[];
 
   constructor() {
     this.canvas = document.getElementById('touhou-canvas') as HTMLCanvasElement;
@@ -118,8 +131,10 @@ class TouhouGame {
       isRunning: false,
       isPaused: false,
       score: 0,
-      lives: 3,
-      level: 1
+      lives: 5,
+      level: 1,
+      stage: 1,
+      maxStage: 3
     };
 
     this.player = {
@@ -159,6 +174,8 @@ class TouhouGame {
     this.spritesLoaded = false;
     this.patternIndex = 0;
     this.patternElapsed = 0;
+    this.bgMusic = null;
+    this.bossSprites = [null, null, null];
 
     this.setupEventListeners();
     this.setupUI();
@@ -225,19 +242,18 @@ class TouhouGame {
     };
     reimuSprite.src = '/images/game-sprites/reimu.png';
 
-    // Load Fairy sprite sheet (3x8 grid = 24 frames total)
-    const fairySprite = new Image();
-    fairySprite.onload = () => {
-      // Store fairy sprite globally for enemies
-      (this as any).fairySprite = fairySprite;
-      (this as any).fairySpriteWidth = fairySprite.width;
-      (this as any).fairySpriteHeight = fairySprite.height;
-      console.log('Fairy sprite loaded:', fairySprite.width, 'x', fairySprite.height);
-    };
-    fairySprite.onerror = () => {
-      console.log('Fairy sprite not found, using fallback');
-    };
-    fairySprite.src = '/images/game-sprites/fairy.png';
+    // Load 3 boss sprites
+    for (let i = 0; i < 3; i++) {
+      const bossSprite = new Image();
+      bossSprite.onload = () => {
+        this.bossSprites[i] = bossSprite;
+        console.log(`Boss ${i + 1} sprite loaded:`, bossSprite.width, 'x', bossSprite.height);
+      };
+      bossSprite.onerror = () => {
+        console.log(`Boss ${i + 1} sprite not found, using fallback`);
+      };
+      bossSprite.src = `/images/game-sprites/boss${i + 1}.png`;
+    }
   }
 
   private startGame(): void {
@@ -249,8 +265,9 @@ class TouhouGame {
     this.gameState.isRunning = true;
     this.gameState.isPaused = false;
     this.gameState.score = 0;
-    this.gameState.lives = 3;
+    this.gameState.lives = 5;
     this.gameState.level = 1;
+    this.gameState.stage = 1;
 
     this.player.x = this.canvas.width / 2 - 16;
     this.player.y = this.canvas.height - 70;
@@ -259,36 +276,90 @@ class TouhouGame {
     this.enemies = [];
     this.particles = [];
     this.enemySpawnTimer = 0;
-    // Spawn a single boss at the top center
+
+    this.spawnBoss(1);
+    this.playStageMusic(1);
+    this.updateUI();
+    this.lastTime = performance.now();
+    this.gameLoop();
+  }
+
+  private spawnBoss(stage: number): void {
+    const healthValues = [1000, 1500, 2000];
+    const bossConfigs = [
+      { // Boss 1: 8 frames (2 rows x 4 frames) - 273x138px
+        spriteWidth: 273,
+        spriteHeight: 138,
+        frameWidth: 68,
+        frameHeight: 69,
+        totalFrames: 8,
+        framesPerRow: 4
+      },
+      { // Boss 2: 8 frames (2 rows x 4 frames) - 271x135px
+        spriteWidth: 271,
+        spriteHeight: 135,
+        frameWidth: 68,
+        frameHeight: 67,
+        totalFrames: 8,
+        framesPerRow: 4
+      },
+      { // Boss 3: 4 frames (1 row x 4 frames) - 273x70px
+        spriteWidth: 273,
+        spriteHeight: 70,
+        frameWidth: 68,
+        frameHeight: 70,
+        totalFrames: 4,
+        framesPerRow: 4
+      }
+    ];
+    
+    const config = bossConfigs[stage - 1];
     this.boss = {
       x: this.canvas.width / 2 - 48,
       y: 40,
       width: 96,
       height: 96,
-      health: 1000,
-      maxHealth: 1000,
+      health: healthValues[stage - 1],
+      maxHealth: healthValues[stage - 1],
       bullets: [],
-      sprite: null
+      sprite: this.bossSprites[stage - 1],
+      spriteWidth: config.spriteWidth,
+      spriteHeight: config.spriteHeight,
+      frameWidth: config.frameWidth,
+      frameHeight: config.frameHeight,
+      currentFrame: 0,
+      animationSpeed: 150,
+      lastFrameTime: 0,
+      totalFrames: config.totalFrames,
+      framesPerRow: config.framesPerRow
     };
     this.patternIndex = 0;
     this.patternElapsed = 0;
-    // Load boss sprite if available
-    const bossImg = new Image();
-    bossImg.onload = () => {
-      if (this.boss) this.boss.sprite = bossImg;
-    };
-    bossImg.onerror = () => {
-      // Fallback rectangle draw
-    };
-    bossImg.src = '/images/taichi.png';
+  }
 
-    this.updateUI();
-    this.gameLoop();
+  private playStageMusic(stage: number): void {
+    if (this.bgMusic) {
+      this.bgMusic.pause();
+      this.bgMusic = null;
+    }
+    
+    const music = new Audio(`/audio/stage${stage}.mp3`);
+    music.loop = true;
+    music.volume = 0.5;
+    music.play().catch(err => {
+      console.log('Could not play stage music:', err);
+    });
+    this.bgMusic = music;
   }
 
   private endGame(): void {
     this.gameState.isRunning = false;
     this.gameState.isPaused = false;
+
+    if (this.bgMusic) {
+      this.bgMusic.pause();
+      this.bgMusic = null;
+    }
 
     const overlay = document.getElementById('touhou-game-overlay');
     if (overlay) {
@@ -306,20 +377,32 @@ class TouhouGame {
     this.gameState.isPaused = !this.gameState.isPaused;
     
     if (!this.gameState.isPaused) {
-      this.gameLoop();
+      this.lastTime = performance.now(); // Reset lastTime to avoid huge deltaTime
     }
   }
 
   private restartGame(): void {
     const gameOverScreen = document.getElementById('game-over-screen');
+    const gameOverTitle = gameOverScreen?.querySelector('h2');
+    
     if (gameOverScreen) {
       gameOverScreen.classList.add('hidden');
     }
+    
+    if (gameOverTitle) {
+      gameOverTitle.textContent = 'Game Over!';
+    }
+    
     this.startGame();
   }
 
   private gameLoop(): void {
-    if (!this.gameState.isRunning || this.gameState.isPaused) return;
+    if (!this.gameState.isRunning) return;
+    
+    if (this.gameState.isPaused) {
+      this.animationId = requestAnimationFrame(() => this.gameLoop());
+      return;
+    }
 
     const currentTime = performance.now();
     const deltaTime = currentTime - this.lastTime;
@@ -383,9 +466,18 @@ class TouhouGame {
     if (!this.boss) return;
     // Horizontal float movement
     this.boss.x = this.canvas.width / 2 - this.boss.width / 2 + Math.sin(performance.now() / 800) * 80;
-    // Pattern scheduling
+    
+    // Update boss animation
+    if (Date.now() - this.boss.lastFrameTime > this.boss.animationSpeed) {
+      this.boss.currentFrame = (this.boss.currentFrame + 1) % this.boss.totalFrames;
+      this.boss.lastFrameTime = Date.now();
+    }
+
+    // Pattern scheduling - different patterns for each boss
     this.patternElapsed += deltaTime;
-    const patterns: BossPattern[] = DefaultBossScript;
+    const patternSets = [Boss1Patterns, Boss2Patterns, Boss3Patterns];
+    const patterns: BossPattern[] = patternSets[this.gameState.stage - 1];
+    
     if (patterns.length > 0) {
       const current = patterns[this.patternIndex % patterns.length];
       // spawn bullets for this tick
@@ -482,16 +574,27 @@ class TouhouGame {
           height: this.playerHitboxRadius * 2,
         };
         if (this.checkCollision(bullet, hitbox)) { // chỉ khi dính vào chấm giữa
-          this.boss!.bullets.splice(bulletIndex, 1);
           // Apply iFrames so only one life per hit
           const now = Date.now();
           if (now >= this.invulnerableUntil) {
             this.gameState.lives--;
-            this.invulnerableUntil = now + 1200; // 1.2s invulnerability
+            this.invulnerableUntil = now + 2000; // 2s invulnerability
             this.updateUI();
+            
+            // Bomb effect: Clear all boss bullets
+            this.boss!.bullets = [];
+            
+            // Create big explosion effect
             this.createExplosion(
               hitbox.x + this.playerHitboxRadius, hitbox.y + this.playerHitboxRadius
             );
+            for (let i = 0; i < 30; i++) {
+              this.createExplosion(
+                this.player.x + this.player.width / 2 + (Math.random() - 0.5) * 200,
+                this.player.y + this.player.height / 2 + (Math.random() - 0.5) * 200
+              );
+            }
+            
             if (this.gameState.lives <= 0) this.gameOver();
           }
         }
@@ -503,11 +606,25 @@ class TouhouGame {
       this.player.bullets.forEach((bullet, bulletIndex) => {
         if (this.checkCollision(bullet, { x: this.boss!.x, y: this.boss!.y, width: this.boss!.width, height: this.boss!.height })) {
           this.player.bullets.splice(bulletIndex, 1);
-          this.boss!.health -= 1;
+          this.boss!.health -= 2; // Increased damage from 1 to 2
           if (this.boss!.health <= 0) {
+            // Boss defeated
             this.createExplosion(this.boss!.x + this.boss!.width / 2, this.boss!.y + this.boss!.height / 2);
-            this.boss = null;
-            this.gameOver();
+            this.gameState.score += 1000;
+            this.gameState.lives++; // Bonus life for defeating boss
+            this.gameState.stage++;
+            this.updateUI();
+            
+            // Check if there are more bosses
+            if (this.gameState.stage <= this.gameState.maxStage) {
+              // Spawn next boss immediately
+              this.spawnBoss(this.gameState.stage);
+              this.playStageMusic(this.gameState.stage);
+            } else {
+              // All bosses defeated
+              this.boss = null;
+              this.gameWin();
+            }
           }
         }
       });
@@ -565,7 +682,7 @@ class TouhouGame {
           width: 4,
           height: 8,
           speed: speed,
-          type: 'player',
+          type: 'player' as 'player',
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
         });
@@ -573,13 +690,13 @@ class TouhouGame {
       this.player.lastShot = Date.now();
     } else {
       // Nếu chưa có boss thì bắn thường như cũ
-      const bullet = {
+      const bullet: Bullet = {
         x: this.player.x + this.player.width / 2 - 2,
         y: this.player.y,
         width: 4,
         height: 8,
         speed: 7,
-        type: 'player',
+        type: 'player' as 'player',
         vx: 0,
         vy: -7,
       };
@@ -624,6 +741,11 @@ class TouhouGame {
   private gameOver(): void {
     this.gameState.isRunning = false;
     
+    if (this.bgMusic) {
+      this.bgMusic.pause();
+      this.bgMusic = null;
+    }
+
     const gameOverScreen = document.getElementById('game-over-screen');
     const finalScore = document.getElementById('final-score');
     
@@ -636,9 +758,35 @@ class TouhouGame {
     }
   }
 
+  private gameWin(): void {
+    this.gameState.isRunning = false;
+    
+    if (this.bgMusic) {
+      this.bgMusic.pause();
+      this.bgMusic = null;
+    }
+
+    const gameOverScreen = document.getElementById('game-over-screen');
+    const finalScore = document.getElementById('final-score');
+    const gameOverTitle = gameOverScreen?.querySelector('h2');
+    
+    if (gameOverScreen) {
+      gameOverScreen.classList.remove('hidden');
+    }
+    
+    if (gameOverTitle) {
+      gameOverTitle.textContent = 'Victory!';
+    }
+    
+    if (finalScore) {
+      finalScore.textContent = this.gameState.score.toString();
+    }
+  }
+
   private updateUI(): void {
     const scoreElement = document.getElementById('game-score');
     const livesElement = document.getElementById('game-lives');
+    const stageElement = document.getElementById('game-stage');
     
     if (scoreElement) {
       scoreElement.textContent = this.gameState.score.toString();
@@ -646,6 +794,10 @@ class TouhouGame {
     
     if (livesElement) {
       livesElement.textContent = this.gameState.lives.toString();
+    }
+
+    if (stageElement) {
+      stageElement.textContent = this.gameState.stage.toString();
     }
   }
 
@@ -655,7 +807,7 @@ class TouhouGame {
     
     // Draw background stars
     this.drawStars();
-    
+
     // Draw player
     this.drawPlayer();
     
@@ -671,6 +823,9 @@ class TouhouGame {
 
     // Draw boss HP bar
     if (this.boss) this.drawBossHpBar(this.boss);
+    
+    // Draw stage info
+    this.drawStageInfo();
   }
 
   private drawStars(): void {
@@ -746,10 +901,24 @@ class TouhouGame {
 
   private drawBoss(boss: Boss): void {
     if (boss.sprite) {
-      this.ctx.drawImage(boss.sprite, boss.x, boss.y, boss.width, boss.height);
+      // Calculate frame position in sprite sheet
+      const frameRow = Math.floor(boss.currentFrame / boss.framesPerRow);
+      const frameCol = boss.currentFrame % boss.framesPerRow;
+      const frameX = frameCol * boss.frameWidth;
+      const frameY = frameRow * boss.frameHeight;
+      
+      this.ctx.drawImage(
+        boss.sprite,
+        frameX, frameY, boss.frameWidth, boss.frameHeight,
+        boss.x, boss.y, boss.width, boss.height
+      );
     } else {
-      this.ctx.fillStyle = '#7e57c2';
-      this.ctx.shadowColor = '#b388ff';
+      const colors = ['#7e57c2', '#e91e63', '#ffd700'];
+      const glowColors = ['#b388ff', '#f48fb1', '#ffecb3'];
+      const stageIndex = this.gameState.stage - 1;
+      
+      this.ctx.fillStyle = colors[stageIndex] || '#7e57c2';
+      this.ctx.shadowColor = glowColors[stageIndex] || '#b388ff';
       this.ctx.shadowBlur = 12;
       this.ctx.fillRect(boss.x, boss.y, boss.width, boss.height);
       this.ctx.shadowBlur = 0;
@@ -788,6 +957,22 @@ class TouhouGame {
     this.ctx.globalAlpha = alpha;
     this.ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
     this.ctx.globalAlpha = 1;
+  }
+
+  private drawStageInfo(): void {
+    const stageNames = ['Marisa', 'Elly', 'Yuuka'];
+    this.ctx.save();
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    this.ctx.fillRect(10, 10, 180, 50);
+    
+    this.ctx.fillStyle = '#ffffff';
+    this.ctx.font = 'bold 16px Arial';
+    this.ctx.fillText(`Stage ${this.gameState.stage}`, 20, 30);
+    
+    this.ctx.font = '14px Arial';
+    this.ctx.fillStyle = '#ffaa00';
+    this.ctx.fillText(stageNames[this.gameState.stage - 1], 20, 50);
+    this.ctx.restore();
   }
 }
 

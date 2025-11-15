@@ -348,3 +348,114 @@ export const DefaultBossScript: BossPattern[] = shufflePatterns([
 ]);
 
 
+
+
+// Boss 1 (Marisa) - Easy patterns
+export const Boss1Patterns: BossPattern[] = [
+  spiralStream,
+  aimedVolley,
+  {
+    name: 'simpleRain',
+    duration: 4000,
+    spawn: (ctx: PatternContext) => {
+      const bullets: BossBulletConfig[] = [];
+      if (ctx.tick % 150 < 16) {
+        for (let i = 0; i <= 5; i++) {
+          const x = 150 + i * 100;
+          bullets.push({
+            position: { x, y: ctx.bossPos.y },
+            speed: slow(2.0),
+            angleRad: degToRad(90),
+            width: 4,
+            height: 8
+          });
+        }
+      }
+      return bullets;
+    }
+  }
+];
+
+// Boss 2 (Elly) - Medium patterns
+export const Boss2Patterns: BossPattern[] = [
+  radialBurst,
+  zigzagBarrage,
+  waveRings,
+  crossSpread,
+  {
+    name: 'curtainRain',
+    duration: 5000,
+    spawn: (ctx: PatternContext) => {
+      const bullets: BossBulletConfig[] = [];
+      if (ctx.tick % 90 < 16) {
+        for (let i = 0; i <= 8; i++) {
+          const x = 80 + i * 70;
+          const angle = degToRad(90 + Math.sin((ctx.tick + i * 50) / 200) * 20);
+          bullets.push({
+            position: { x, y: ctx.bossPos.y },
+            speed: slow(2.6),
+            angleRad: angle,
+            width: 4,
+            height: 8
+          });
+        }
+      }
+      return bullets;
+    }
+  }
+];
+
+// Boss 3 (Yuuka) - Hard patterns
+export const Boss3Patterns: BossPattern[] = [
+  laserWall,
+  inwardSpiral,
+  sidelongZigzag,
+  {
+    name: 'gappedRingSweep',
+    duration: 4500,
+    spawn: (ctx: PatternContext) => {
+      const bullets: BossBulletConfig[] = [];
+      if (ctx.tick % 500 < 16) {
+        const gaps = 2;
+        const count = 36;
+        const gapStart = Math.floor(((ctx.tick / 10) % count));
+        for (let i = 0; i < count; i++) {
+          let skip = false;
+          for (let g = 0; g < gaps; g++) {
+            if (i === (gapStart + g * Math.floor(count / gaps)) % count) skip = true;
+          }
+          if (skip) continue;
+          bullets.push({
+            position: { x: ctx.bossPos.x, y: ctx.bossPos.y },
+            speed: slow(2.4),
+            angleRad: degToRad((360 / count) * i + (ctx.tick / 8)),
+            width: 4,
+            height: 8
+          });
+        }
+      }
+      return bullets;
+    }
+  },
+  {
+    name: 'denseSpiral',
+    duration: 6000,
+    spawn: (ctx: PatternContext) => {
+      const bullets: BossBulletConfig[] = [];
+      if (ctx.tick % 40 < 16) {
+        const base = (ctx.tick / 5) % 360;
+        for (let i = 0; i < 4; i++) {
+          const angle = degToRad(base + i * 90);
+          bullets.push({
+            position: { x: ctx.bossPos.x, y: ctx.bossPos.y },
+            speed: slow(3.5),
+            angleRad: angle,
+            width: 4,
+            height: 8
+          });
+        }
+      }
+      return bullets;
+    }
+  }
+];

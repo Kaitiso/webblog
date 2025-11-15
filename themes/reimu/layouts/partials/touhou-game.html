@@ -4,11 +4,14 @@
     <canvas id="touhou-canvas" width="800" height="600"></canvas>
     <div class="game-ui">
       <div class="game-score">Score: <span id="game-score">0</span></div>
-      <div class="game-lives">Lives: <span id="game-lives">3</span></div>
-      <div class="game-controls">
-        <p>Arrow Keys: Move | Z: Shoot</p>
-        <button id="game-pause-btn">Pause</button>
-        <button id="game-close-btn">Close Game</button>
+      <div class="game-lives">Lives: <span id="game-lives">5</span></div>
+      <div class="game-stage">Stage: <span id="game-stage">1</span></div>
+      <div class="game-controls" style="position: absolute !important; bottom: 10px !important; left: 10px !important; right: 10px !important; top: auto !important; text-align: center;">
+        <p style="background: rgba(0, 0, 0, 0.7); padding: 8px 15px; border-radius: 5px; border: 1px solid rgba(255, 0, 100, 0.3); margin: 0;">Arrow Keys: Move | Z: Shoot | Shift: Slow | ESC: Close</p>
+        <div style="display: none;">
+          <button id="game-pause-btn">Pause</button>
+          <button id="game-close-btn">Close Game</button>
+        </div>
       </div>
     </div>
     <div id="game-over-screen" class="game-over-screen hidden">
