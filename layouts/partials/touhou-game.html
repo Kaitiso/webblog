@@ -1,20 +1,39 @@
 <!-- Touhou Mini Game Overlay -->
 <div id="touhou-game-overlay" class="game-overlay hidden">
   <div class="game-container">
-    <canvas id="touhou-canvas" width="900" height="675"></canvas>
-    <div class="game-ui">
-      <div class="game-score">Score: <span id="game-score">0</span></div>
-      <div class="game-lives">Lives: <span id="game-lives">5</span></div>
-      <div class="game-stage">Stage: <span id="game-stage">1</span></div>
-      <div class="game-controls" style="position: absolute; bottom: 10px; left: 10px; right: 10px;">
-        <div class="game-instructions">
-          <p>Arrow Keys: Move | Z: Shoot | Shift: Slow | ESC: Close</p>
+    <canvas id="touhou-canvas" width="600" height="800"></canvas>
+    <div class="game-ui-right">
+      <div class="ui-panel">
+        <div class="ui-section">
+          <div class="ui-label">SCORE</div>
+          <div class="ui-value" id="game-score">0</div>
         </div>
-        <div class="game-buttons" style="display: none;">
-          <button id="game-pause-btn">Pause</button>
-          <button id="game-close-btn">Close Game</button>
+        <div class="ui-section">
+          <div class="ui-label">LIVES</div>
+          <div class="ui-value" id="game-lives">♥ ♥ ♥ ♥ ♥</div>
+        </div>
+        <div class="ui-divider"></div>
+        <div class="ui-section controls-section">
+          <div class="ui-label">CONTROLS</div>
+          <div class="control-item">
+            <span class="key">↑ ↓ ← →</span>
+            <span class="desc">Move</span>
+          </div>
+          <div class="control-item">
+            <span class="key">Z</span>
+            <span class="desc">Shoot</span>
+          </div>
+          <div class="control-item">
+            <span class="key">Shift</span>
+            <span class="desc">Slow</span>
+          </div>
+          <div class="control-item">
+            <span class="key">ESC</span>
+            <span class="desc">Close</span>
+          </div>
         </div>
       </div>
+      <button id="game-close-btn" class="close-button">✕</button>
     </div>
     <div id="game-over-screen" class="game-over-screen hidden">
       <h2>Game Over!</h2>
@@ -27,8 +46,113 @@
 <style>
 /* Custom Touhou Game Overrides */
 .game-container {
-  transform: scale(1.1);
   position: relative;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+#touhou-canvas {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  max-height: 85vh;
+  border: 3px solid rgba(255, 0, 100, 0.5);
+  box-shadow: 0 0 20px rgba(255, 0, 100, 0.3);
+  border-radius: 8px;
+}
+
+.game-ui-right {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 200px;
+}
+
+.ui-panel {
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid rgba(255, 0, 100, 0.4);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 0, 100, 0.2);
+}
+
+.ui-section {
+  margin-bottom: 20px;
+}
+
+.ui-label {
+  font-size: 11px;
+  color: #ff0066;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 5px rgba(255, 0, 100, 0.5);
+}
+
+.ui-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.ui-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 100, 0.5), transparent);
+  margin: 15px 0;
+}
+
+.controls-section {
+  margin-bottom: 0;
+}
+
+.control-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.key {
+  background: rgba(255, 0, 100, 0.2);
+  border: 1px solid rgba(255, 0, 100, 0.5);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #ff3399;
+  min-width: 60px;
+  text-align: center;
+}
+
+.desc {
+  color: #ccc;
+  font-size: 12px;
+}
+
+.close-button {
+  background: rgba(255, 0, 100, 0.8);
+  border: 2px solid rgba(255, 0, 100, 1);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
+}
+
+.close-button:hover {
+  background: rgba(255, 0, 100, 1);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 0, 100, 0.8);
 }
 
 .game-ui {
