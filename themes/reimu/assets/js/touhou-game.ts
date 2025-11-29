@@ -908,10 +908,10 @@ class TouhouGame {
     
     if (patternCycle === 0) {
       // Phase 1: Circular pattern with bullet type 0
-      const bulletCount = 16;
+      const bulletCount = 12;
       for (let i = 0; i < bulletCount; i++) {
         const angle = (Math.PI * 2 / bulletCount) * i + Date.now() / 500;
-        const speed = 2.5;
+        const speed = 6;
         
         this.boss.bullets.push({
           x: bossCenterX - 6,
@@ -927,7 +927,7 @@ class TouhouGame {
       }
     } else if (patternCycle === 1) {
       // Phase 2: Double spiral with bullet types 1 & 2
-      const bulletCount = 10;
+      const bulletCount = 12;
       const spiralOffset = Date.now() / 100;
       for (let i = 0; i < bulletCount; i++) {
         const angle1 = (Math.PI * 2 / bulletCount) * i + spiralOffset;
@@ -1026,7 +1026,7 @@ class TouhouGame {
       }
     } else if (patternCycle === 5) {
       // Pattern 6: Chaos pattern
-      const bulletCount = 20;
+      const bulletCount = 10;
       const time = Date.now() / 300;
       for (let i = 0; i < bulletCount; i++) {
         const angle = (Math.PI * 2 / bulletCount) * i + time;
@@ -1047,7 +1047,7 @@ class TouhouGame {
       }
     } else if (patternCycle === 6) {
       // Pattern 7: Dense circle
-      const bulletCount = 24;
+      const bulletCount = 12;
       for (let i = 0; i < bulletCount; i++) {
         const angle = (Math.PI * 2 / bulletCount) * i;
         const speed = 2;
@@ -1088,7 +1088,7 @@ class TouhouGame {
     } else if (patternCycle === 8) {
       // Pattern 9: Triple spiral
       for (let layer = 0; layer < 3; layer++) {
-        const bulletCount = 8;
+        const bulletCount = 10;
         const offset = (Date.now() / 200) + layer * (Math.PI * 2 / 3);
         for (let i = 0; i < bulletCount; i++) {
           const angle = (Math.PI * 2 / bulletCount) * i + offset;
@@ -1128,7 +1128,7 @@ class TouhouGame {
     } else if (patternCycle === 10) {
       // Pattern 11: Flower burst (multiple expanding rings)
       const rings = 4;
-      const bulletsPerRing = 16;
+      const bulletsPerRing = 12;
       const time = Date.now() / 1000;
       
       for (let ring = 0; ring < rings; ring++) {
@@ -1153,7 +1153,7 @@ class TouhouGame {
     } else {
       // Pattern 12: Spiral galaxy (continuous spiral)
       const arms = 3;
-      const bulletsPerArm = 12;
+      const bulletsPerArm = 10;
       const time = Date.now() / 100;
       
       for (let arm = 0; arm < arms; arm++) {
