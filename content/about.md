@@ -2,7 +2,7 @@
 title: "Too Lazy to Be a Genius (˶╹ᵕ╹˶) Too Curious to Quit"
 date: 2025-10-29T11:00:00-07:00
 lastmod: 2025-10-30T11:00:00-07:00
-cover: "/images/reimu2.png"
+cover: "/images/reimu2.webp"
 ---
 ## ⛩️ Just a place where faith equals Reimu ⛩️
 
@@ -16,7 +16,7 @@ cover: "/images/reimu2.png"
 
 ## (っ˕ -｡)ᶻ 𝗓 𐰁 Reimu probably watching me debug
 
-![Reimu probably watching me debug.](/images/reimu1.png)
+![Reimu probably watching me debug.](/images/reimu1.webp)
 
 
 
