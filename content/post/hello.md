@@ -2,7 +2,7 @@
 title: "I Saw Reimu theme, So I Coded"
 date: 2025-10-29T11:00:00-07:00
 lastmod: 2025-12-05T11:00:00-07:00
-cover: "/images/reimu3.png"
+cover: "/images/reimu3.webp"
 categories:
   - Not Coding
 tags:
