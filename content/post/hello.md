@@ -13,7 +13,7 @@ tags:
 
 ## ⛩️ The Shrine I Didn’t Mean to Build ⛩️
 
-- Honestly... i didn’t plan to make a blog at all. I was just surfing the internet, doing nothing important ~as usual... Then, out of nowhere, i saw this theme… with Reimu Hakurei from Touhou Project
+- Honestly... i didn’t plan to make a blog at all. I was just surfing the internet, doing nothing important ~as usual...( ⓛ ω ⓛ *) Then, out of nowhere, i saw this theme… with Reimu Hakurei from Touhou Project
 - And that was it, my brain went “Welp, i guess i have to do something with that thing. For my beloved Reimu.”
 - Now somehow, i have a blog. I guess that’s what they call an incident.
 
@@ -50,8 +50,8 @@ though somehow it will be probably broken again soon ᗜ⁔ᗜ
 > ---
 > ![Reimu theme.](/images/marisa1.gif)
 > 
->- [ ]  *“All done! Bugs are gone, that’s some good magic ze☆*  
->- [x]  *Perfect time for a nap or a new experiment ze☆"*  
+>- [ ]  *All done! Bugs are gone, that’s some good magic daze☆*  
+>- [x]  *Perfect time for a nap or a new experiment daze☆*  
 >  
 >
 > 

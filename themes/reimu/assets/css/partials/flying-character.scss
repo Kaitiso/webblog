@@ -1,0 +1,87 @@
+// Flying Character Animation
+.flying-character {
+  position: fixed;
+  top: 0;
+  left: -80px;
+  width: 80px;
+  height: 80px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  
+  &.flying-left-to-right {
+    animation: flyLeftToRight 6s linear forwards;
+  }
+  
+  &.flying-right-to-left {
+    animation: flyRightToLeft 6s linear forwards;
+  }
+  
+  &.flying-top-to-bottom {
+    animation: flyTopToBottom 8s linear forwards;
+  }
+}
+
+@keyframes flyLeftToRight {
+  0% {
+    left: -80px;
+    top: 10%;
+  }
+  50% {
+    top: 20%;
+  }
+  100% {
+    left: 100vw;
+    top: 15%;
+  }
+}
+
+@keyframes flyRightToLeft {
+  0% {
+    right: -80px;
+    left: auto;
+    top: 25%;
+    transform: scaleX(-1);
+  }
+  50% {
+    top: 35%;
+  }
+  100% {
+    left: -80px;
+    right: auto;
+    top: 30%;
+    transform: scaleX(-1);
+  }
+}
+
+@keyframes flyTopToBottom {
+  0% {
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  100% {
+    top: 100vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+// Animation trigger (fade out at end)
+@keyframes fadeOutAtEnd {
+  90% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.flying-character.flying-left-to-right,
+.flying-character.flying-right-to-left,
+.flying-character.flying-top-to-bottom {
+  animation-timing-function: ease-in-out;
+}

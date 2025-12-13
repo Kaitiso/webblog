@@ -259,3 +259,6 @@ window.safeImport = async (url: string, integrity?: string) => {
 
 // Import Touhou game
 import "./touhou-game";
+
+// Import Marisa flying animation
+import "./marisa-flying";
