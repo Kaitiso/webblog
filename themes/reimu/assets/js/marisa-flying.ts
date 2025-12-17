@@ -36,6 +36,7 @@ class MarisaFlying {
 
   private preloadFrames(): void {
     // Preload all frames as data URLs
+    console.log(`[Marisa Flying] Preloading ${this.config.frameCount} frames from ${this.config.framePath}...`);
     for (let i = 0; i < this.config.frameCount; i++) {
       const src = `${this.config.framePath}${i}.png`;
       const img = new Image();
@@ -43,16 +44,41 @@ class MarisaFlying {
       // Cache in memory
       img.onload = () => {
         this.preloadedFrames.set(i, src);
+        if (this.preloadedFrames.size === this.config.frameCount) {
+          console.log('[Marisa Flying] All frames preloaded successfully!');
+        }
+      };
+      img.onerror = () => {
+        console.error(`[Marisa Flying] Failed to load frame: ${src}`);
       };
     }
   }
 
   private init(): void {
-    // Track user activity
+    // Track user activity with throttling to avoid too frequent resets
+    let mouseMoveThrottle: number | null = null;
+    let scrollThrottle: number | null = null;
+    
     document.addEventListener('click', () => this.resetIdle());
-    document.addEventListener('mousemove', () => this.resetIdle());
+    document.addEventListener('mousemove', () => {
+      // Throttle mousemove to once per 2 seconds
+      if (!mouseMoveThrottle) {
+        this.resetIdle();
+        mouseMoveThrottle = window.setTimeout(() => {
+          mouseMoveThrottle = null;
+        }, 2000);
+      }
+    });
     document.addEventListener('keydown', () => this.resetIdle());
-    document.addEventListener('scroll', () => this.resetIdle());
+    document.addEventListener('scroll', () => {
+      // Throttle scroll to once per 2 seconds
+      if (!scrollThrottle) {
+        this.resetIdle();
+        scrollThrottle = window.setTimeout(() => {
+          scrollThrottle = null;
+        }, 2000);
+      }
+    });
     document.addEventListener('touchstart', () => this.resetIdle());
     document.addEventListener('touchmove', () => this.resetIdle());
 
@@ -70,8 +96,11 @@ class MarisaFlying {
 
     // Set new timer
     this.idleTimer = setTimeout(() => {
+      console.log('[Marisa Flying] Idle timeout reached, checking if should fly...');
       if (!this.isFlying) {
         this.triggerFlight();
+      } else {
+        console.log('[Marisa Flying] Already flying, skipping...');
       }
     }, this.config.idleTime);
   }
@@ -224,12 +253,19 @@ class ReimuflyingAnimation {
 
   private preloadFrames(): void {
     // Preload all frames
+    console.log(`[Reimu Flying] Preloading ${this.frameCount} frames from ${this.framePath}...`);
     for (let i = 0; i < this.frameCount; i++) {
       const src = `${this.framePath}${i}.png`;
       const img = new Image();
       img.src = src;
       img.onload = () => {
         this.preloadedFrames.set(i, src);
+        if (this.preloadedFrames.size === this.frameCount) {
+          console.log('[Reimu Flying] All frames preloaded successfully!');
+        }
+      };
+      img.onerror = () => {
+        console.error(`[Reimu Flying] Failed to load frame: ${src}`);
       };
     }
   }
@@ -333,6 +369,8 @@ class ReimuflyingAnimation {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('[Marisa Flying] Initializing idle animation system...');
+  
   const marisaFlying = new MarisaFlying({
     idleTime: 15000, // 15 seconds
     frameCount: 11, // 11 frames (0-10) for dir_change set
@@ -345,6 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Override triggerFlight to trigger both animations
   const originalTriggerFlight = marisaFlying.triggerFlight.bind(marisaFlying);
   (marisaFlying as any).triggerFlight = function() {
+    console.log('[Marisa Flying] Triggering flight animation!');
     originalTriggerFlight();
     reimuFlying.fly();
   };
@@ -352,4 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Expose to window for debugging/manual trigger
   (window as any).marisaFlying = marisaFlying;
   (window as any).reimuFlying = reimuFlying;
+  
+  console.log('[Marisa Flying] System initialized. Wait 15 seconds of idle or call window.marisaFlying.fly() to test.');
 });
