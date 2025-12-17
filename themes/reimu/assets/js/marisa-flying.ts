@@ -37,6 +37,9 @@ class MarisaFlying {
   private preloadFrames(): void {
     // Preload all frames as data URLs
     console.log(`[Marisa Flying] Preloading ${this.config.frameCount} frames from ${this.config.framePath}...`);
+    let loadedCount = 0;
+    let errorCount = 0;
+    
     for (let i = 0; i < this.config.frameCount; i++) {
       const src = `${this.config.framePath}${i}.png`;
       const img = new Image();
@@ -44,12 +47,17 @@ class MarisaFlying {
       // Cache in memory
       img.onload = () => {
         this.preloadedFrames.set(i, src);
-        if (this.preloadedFrames.size === this.config.frameCount) {
-          console.log('[Marisa Flying] All frames preloaded successfully!');
+        loadedCount++;
+        if (loadedCount + errorCount === this.config.frameCount) {
+          console.log(`[Marisa Flying] Preload complete: ${loadedCount} loaded, ${errorCount} failed`);
         }
       };
       img.onerror = () => {
         console.error(`[Marisa Flying] Failed to load frame: ${src}`);
+        errorCount++;
+        if (loadedCount + errorCount === this.config.frameCount) {
+          console.log(`[Marisa Flying] Preload complete: ${loadedCount} loaded, ${errorCount} failed`);
+        }
       };
     }
   }
@@ -174,19 +182,28 @@ class MarisaFlying {
   }
 
   private animate(): void {
-    if (!this.flyingElement) return;
+    if (!this.flyingElement) {
+      console.error('[Marisa Flying] No flying element to animate!');
+      return;
+    }
 
     const img = this.flyingElement.querySelector('img') as HTMLImageElement;
+    if (!img) {
+      console.error('[Marisa Flying] No img element found!');
+      return;
+    }
+
     const element = this.flyingElement;
     const startTime = Date.now();
     const frameCount = this.config.frameCount;
     const frameDelay = this.config.frameDelay;
-    const totalFrames = frameCount;
     const startLeft = (element as any).startLeft;
     const endLeft = (element as any).endLeft;
-    const totalFrameDuration = frameDelay * totalFrames;
 
     let lastFrameIndex = -1;
+    let frameUpdateCount = 0;
+
+    console.log('[Marisa Flying] Starting animation loop...');
 
     const animateFrame = () => {
       const elapsed = Date.now() - startTime;
@@ -197,12 +214,21 @@ class MarisaFlying {
       element.style.left = currentLeft + 'px';
 
       // Frame index - calculate which frame should be shown at this time
-      let frameIndex = Math.floor((elapsed / frameDelay) % totalFrames);
-      frameIndex = Math.min(frameIndex, totalFrames - 1);
+      let frameIndex = Math.floor((elapsed / frameDelay) % frameCount);
 
-      // Only update image if frame changed and image is cached
-      if (frameIndex !== lastFrameIndex && this.preloadedFrames.has(frameIndex)) {
-        img.src = this.preloadedFrames.get(frameIndex)!;
+      // Update image if frame changed
+      if (frameIndex !== lastFrameIndex) {
+        if (this.preloadedFrames.has(frameIndex)) {
+          img.src = this.preloadedFrames.get(frameIndex)!;
+          frameUpdateCount++;
+          if (frameUpdateCount <= 3) {
+            console.log(`[Marisa Flying] Frame updated to ${frameIndex}`);
+          }
+        } else if (frameUpdateCount === 0) {
+          // If no frames loaded at all, try loading directly
+          img.src = `${this.config.framePath}${frameIndex}.png`;
+          console.warn(`[Marisa Flying] Frame ${frameIndex} not preloaded, loading directly`);
+        }
         lastFrameIndex = frameIndex;
       }
 
@@ -213,6 +239,8 @@ class MarisaFlying {
 
       if (progress < 1) {
         requestAnimationFrame(animateFrame);
+      } else {
+        console.log(`[Marisa Flying] Animation complete. Total frame updates: ${frameUpdateCount}`);
       }
     };
 
@@ -254,18 +282,26 @@ class ReimuflyingAnimation {
   private preloadFrames(): void {
     // Preload all frames
     console.log(`[Reimu Flying] Preloading ${this.frameCount} frames from ${this.framePath}...`);
+    let loadedCount = 0;
+    let errorCount = 0;
+    
     for (let i = 0; i < this.frameCount; i++) {
       const src = `${this.framePath}${i}.png`;
       const img = new Image();
       img.src = src;
       img.onload = () => {
         this.preloadedFrames.set(i, src);
-        if (this.preloadedFrames.size === this.frameCount) {
-          console.log('[Reimu Flying] All frames preloaded successfully!');
+        loadedCount++;
+        if (loadedCount + errorCount === this.frameCount) {
+          console.log(`[Reimu Flying] Preload complete: ${loadedCount} loaded, ${errorCount} failed`);
         }
       };
       img.onerror = () => {
         console.error(`[Reimu Flying] Failed to load frame: ${src}`);
+        errorCount++;
+        if (loadedCount + errorCount === this.frameCount) {
+          console.log(`[Reimu Flying] Preload complete: ${loadedCount} loaded, ${errorCount} failed`);
+        }
       };
     }
   }
@@ -319,16 +355,26 @@ class ReimuflyingAnimation {
   }
 
   private animate(): void {
-    if (!this.flyingElement) return;
+    if (!this.flyingElement) {
+      console.error('[Reimu Flying] No flying element to animate!');
+      return;
+    }
 
     const img = this.flyingElement.querySelector('img') as HTMLImageElement;
+    if (!img) {
+      console.error('[Reimu Flying] No img element found!');
+      return;
+    }
+
     const element = this.flyingElement;
     const startTime = Date.now();
     const startLeft = (element as any).startLeft;
     const endLeft = (element as any).endLeft;
-    const totalFrames = this.frameCount;
 
     let lastFrameIndex = -1;
+    let frameUpdateCount = 0;
+
+    console.log('[Reimu Flying] Starting animation loop...');
 
     const animateFrame = () => {
       const elapsed = Date.now() - startTime;
@@ -339,12 +385,21 @@ class ReimuflyingAnimation {
       element.style.left = currentLeft + 'px';
 
       // Frame index - loop through frames
-      let frameIndex = Math.floor((elapsed / this.frameDelay) % totalFrames);
-      frameIndex = Math.min(frameIndex, totalFrames - 1);
+      let frameIndex = Math.floor((elapsed / this.frameDelay) % this.frameCount);
 
-      // Only update image if frame changed and cached
-      if (frameIndex !== lastFrameIndex && this.preloadedFrames.has(frameIndex)) {
-        img.src = this.preloadedFrames.get(frameIndex)!;
+      // Update image if frame changed
+      if (frameIndex !== lastFrameIndex) {
+        if (this.preloadedFrames.has(frameIndex)) {
+          img.src = this.preloadedFrames.get(frameIndex)!;
+          frameUpdateCount++;
+          if (frameUpdateCount <= 3) {
+            console.log(`[Reimu Flying] Frame updated to ${frameIndex}`);
+          }
+        } else if (frameUpdateCount === 0) {
+          // If no frames loaded at all, try loading directly
+          img.src = `${this.framePath}${frameIndex}.png`;
+          console.warn(`[Reimu Flying] Frame ${frameIndex} not preloaded, loading directly`);
+        }
         lastFrameIndex = frameIndex;
       }
 
@@ -356,6 +411,7 @@ class ReimuflyingAnimation {
       if (progress < 1) {
         requestAnimationFrame(animateFrame);
       } else {
+        console.log(`[Reimu Flying] Animation complete. Total frame updates: ${frameUpdateCount}`);
         if (element.parentElement) {
           element.remove();
         }
