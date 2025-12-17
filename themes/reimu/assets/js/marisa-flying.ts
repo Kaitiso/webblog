@@ -229,7 +229,7 @@ class MarisaFlying {
         }
         frameUpdateCount++;
         if (frameUpdateCount <= 3) {
-          console.log(`[Marisa Flying] Frame updated to ${frameIndex}`);
+          console.log(`[Marisa Flying] Frame updated to ${frameIndex} (elapsed: ${elapsed}ms, progress: ${(progress*100).toFixed(1)}%)`);
         }
         lastFrameIndex = frameIndex;
       }
@@ -242,7 +242,7 @@ class MarisaFlying {
       if (progress < 1) {
         requestAnimationFrame(animateFrame);
       } else {
-        console.log(`[Marisa Flying] Animation complete. Total frame updates: ${frameUpdateCount}`);
+        console.log(`[Marisa Flying] Animation complete. Duration: ${elapsed}ms, Total frame updates: ${frameUpdateCount}`);
       }
     };
 
