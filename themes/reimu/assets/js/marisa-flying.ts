@@ -220,14 +220,16 @@ class MarisaFlying {
       if (frameIndex !== lastFrameIndex) {
         if (this.preloadedFrames.has(frameIndex)) {
           img.src = this.preloadedFrames.get(frameIndex)!;
-          frameUpdateCount++;
-          if (frameUpdateCount <= 3) {
-            console.log(`[Marisa Flying] Frame updated to ${frameIndex}`);
-          }
-        } else if (frameUpdateCount === 0) {
-          // If no frames loaded at all, try loading directly
+        } else {
+          // If frame not preloaded, load directly
           img.src = `${this.config.framePath}${frameIndex}.png`;
-          console.warn(`[Marisa Flying] Frame ${frameIndex} not preloaded, loading directly`);
+          if (frameUpdateCount < 5) {
+            console.warn(`[Marisa Flying] Frame ${frameIndex} not preloaded, loading directly`);
+          }
+        }
+        frameUpdateCount++;
+        if (frameUpdateCount <= 3) {
+          console.log(`[Marisa Flying] Frame updated to ${frameIndex}`);
         }
         lastFrameIndex = frameIndex;
       }
@@ -391,14 +393,16 @@ class ReimuflyingAnimation {
       if (frameIndex !== lastFrameIndex) {
         if (this.preloadedFrames.has(frameIndex)) {
           img.src = this.preloadedFrames.get(frameIndex)!;
-          frameUpdateCount++;
-          if (frameUpdateCount <= 3) {
-            console.log(`[Reimu Flying] Frame updated to ${frameIndex}`);
-          }
-        } else if (frameUpdateCount === 0) {
-          // If no frames loaded at all, try loading directly
+        } else {
+          // If frame not preloaded, load directly
           img.src = `${this.framePath}${frameIndex}.png`;
-          console.warn(`[Reimu Flying] Frame ${frameIndex} not preloaded, loading directly`);
+          if (frameUpdateCount < 5) {
+            console.warn(`[Reimu Flying] Frame ${frameIndex} not preloaded, loading directly`);
+          }
+        }
+        frameUpdateCount++;
+        if (frameUpdateCount <= 3) {
+          console.log(`[Reimu Flying] Frame updated to ${frameIndex}`);
         }
         lastFrameIndex = frameIndex;
       }
